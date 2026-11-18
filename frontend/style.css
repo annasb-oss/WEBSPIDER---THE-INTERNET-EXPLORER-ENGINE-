@@ -140,8 +140,8 @@ html[data-theme="light"] .topbar{background:#fff}
 .tags{gap:13px}
 .action-links a{border-radius:11px;font-weight:650}
 .action-primary{background:#d8c4f8;border-color:#d8c4f8;color:#35145f}
-.action-secondary{background:#28232c;border-color:#554a58;color:#f7f0f5}
-html[data-theme="light"] .action-secondary{background:#f3eff5;color:#29232d;border-color:#ded6e2}
+.action-secondary{background:#28232c;border-color:#554a58;color:#f5f1fa}
+html[data-theme="light"] .action-secondary{background:#f1edf6;color:#29232d;border-color:#d8cde8}
 .code-window{border-radius:12px;border:1px solid #766a7b;background:#211d26;box-shadow:0 7px 22px #0003}
 .code-window-bar{border-radius:11px 11px 0 0;background:#c9c2cf}
 .code-window pre{font-size:13px}
@@ -185,7 +185,7 @@ footer{background:var(--surface)}
 .finding strong{display:block;font-size:13px}
 .finding p{font-size:12px;color:var(--muted);margin:7px 0}
 .finding small{font-size:10px;color:var(--muted);overflow-wrap:anywhere}
-.finding.high{border-left:4px solid #dc5967}.finding.medium{border-left:4px solid #e2a23a}.finding.low{border-left:4px solid #8a86a0}
+.finding.high{border-left:4px solid #b42318}.finding.medium{border-left:4px solid #e2a23a}.finding.low{border-left:4px solid #8a86a0}
 .finding a,.audit-results a{color:var(--purple);font-size:12px}
 
 
@@ -240,3 +240,28 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .progress, progress::-webkit-progress-value, input[type="range"]::-webkit-slider-thumb{
   accent-color:#7026cf;
 }
+
+
+/* Identidade final WEBSPIDER: nenhum acento rosa legado */
+:root{
+  --purple:#7026cf !important;
+  --purple-2:#c09af8 !important;
+  --lavender:#f1edf9 !important;
+  --accent:#7026cf !important;
+}
+html[data-theme="dark"]{
+  --purple:#a879f1 !important;
+  --purple-2:#c09af8 !important;
+  --lavender:#302440 !important;
+}
+.brand-mark,.mini-mark,.event-strip,.claim-actions button,.audit-button,.url-field button{
+  background-color:var(--purple) !important;
+}
+.main-nav a:hover,.main-nav a.active,.breadcrumbs a:hover,.side-link:hover,
+.connect-button:hover,.info-card a,.eyebrow,.url-prefix{
+  color:var(--purple) !important;
+}
+.main-nav a:hover,.main-nav a.active,.side-link.active{
+  border-color:var(--purple) !important;
+}
+::selection{background:#7026cf !important;color:#fff}
