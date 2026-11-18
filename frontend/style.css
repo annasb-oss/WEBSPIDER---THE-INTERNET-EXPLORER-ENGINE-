@@ -107,7 +107,7 @@ footer{border-top:1px solid var(--line);padding:20px max(calc((100vw - 1160px)/2
 @media(max-width:680px){.top-announcement{height:auto;min-height:34px;flex-wrap:wrap;padding-top:7px;padding-bottom:7px;gap:7px;font-size:9px}.top-announcement a{display:none}.topbar{height:auto;min-height:70px;flex-wrap:wrap;padding:12px 5%;gap:10px}.brand{font-size:21px}.header-actions{margin-left:auto}.theme-label{display:none}.theme-toggle{width:35px;padding:0;justify-content:center}.connect-button{height:34px;padding:0 9px}.main-nav{order:3;width:100%;height:37px;flex-basis:100%;justify-content:space-between;gap:8px}.main-nav a{font-size:10px}.event-strip{height:auto;min-height:42px;gap:10px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px;font-size:10px}.event-strip strong{font-size:11px}.event-strip a{font-size:10px}.page-layout{display:block;margin:0 5%;padding-bottom:40px}.breadcrumbs{padding-top:18px;font-size:10px}.package-intro{padding:31px 0 24px}.package-intro h1{font-size:34px;margin-bottom:18px}.package-description{font-size:15px;line-height:1.5}.tags{font-size:11px;gap:10px;margin-bottom:22px}.action-links{gap:8px}.action-links a{height:37px;padding:0 11px;font-size:10px}.install-section h2{font-size:13px;line-height:1.5}.code-window pre{font-size:10px;padding:14px 11px}.sidebar{padding:25px 0 0;border-top:1px solid var(--line);margin-top:25px}.side-block{margin-bottom:20px}.metrics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.activity-heading .run-state{position:static;display:block;margin:-7px 0 13px}.workspace-heading h2,.activity-heading h2{font-size:20px}.config-panel{padding:13px}.form-options{gap:10px}.form-options>div{flex:1;min-width:calc(50% - 8px)}.form-options select{min-width:0;width:100%}footer{gap:12px;flex-wrap:wrap;padding:18px 5%}footer>span:last-child{width:100%}}
 
 
-/* Visual refinement: Symfony-inspired dark package page, WEBSPIDER pink accent */
+/* Visual refinement: Symfony-inspired dark package page, WEBSPIDER purple accent */
 :root{
  --purple:#7026cf;--purple-2:#c09af8;--surface:#111014;--page:#111014;
  --ink:#f5f1f5;--muted:#aaa3ad;--line:#39333d;--panel:#1b181f;--soft:#29212a;--sidebar:#aaa3ad;
@@ -218,4 +218,25 @@ footer{background:var(--surface)}
 }
 @media(prefers-reduced-motion:reduce){
   .spider-thread,.spider-swing,.spider-legs{animation:none}
+}
+
+
+/* Final global purple pass: override any legacy pink accent */
+:root{
+  --purple:#7026cf !important;
+  --purple-2:#c09af8 !important;
+  --accent:#7026cf !important;
+  --accent-2:#c09af8 !important;
+  accent-color:#7026cf;
+}
+::selection{background:#7026cf;color:#fff}
+a:hover, a:focus-visible, .active, [aria-current="page"]{--accent:#7026cf}
+button, .button, .btn, input[type="submit"], input[type="button"], .url-field button, .claim-actions button, .audit-button{
+  accent-color:#7026cf;
+}
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
+  outline-color:#9256e8;
+}
+.progress, progress::-webkit-progress-value, input[type="range"]::-webkit-slider-thumb{
+  accent-color:#7026cf;
 }
