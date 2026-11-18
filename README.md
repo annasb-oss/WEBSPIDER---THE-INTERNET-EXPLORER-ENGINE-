@@ -32,7 +32,17 @@ uvicorn backend.main:app --reload
 
 Open http://127.0.0.1:8000. API docs: http://127.0.0.1:8000/docs.
 
-## Deploy free on Render
+## Publicar a interface no GitHub Pages
+
+O repositório inclui o workflow `.github/workflows/pages.yml`, que publica automaticamente a interface estática em cada atualização da branch `main`.
+
+Endereço esperado: https://annasb-oss.github.io/WEBSPIDER---THE-INTERNET-EXPLORER-ENGINE-/
+
+**Limitação desta versão:** o GitHub Pages hospeda apenas HTML, CSS e JavaScript. A tela fica pública, mas o crawler Python/FastAPI, as buscas reais, as métricas ao vivo e a exportação CSV não funcionam no Pages sozinho. O botão de iniciar fica desativado para não simular uma coleta que não está acontecendo. O backend permanece no repositório e poderá ser conectado posteriormente.
+
+Depois do primeiro push do workflow, se necessário, abra **Settings → Pages** no GitHub e escolha **GitHub Actions** em Build and deployment. Acompanhe a publicação em **Actions → Deploy WEBSPIDER to GitHub Pages**.
+
+## Deploy free do backend no Render (opcional, para quando quiser reativar o crawler)
 
 The repository includes a `render.yaml` Blueprint for a free Python web service.
 
