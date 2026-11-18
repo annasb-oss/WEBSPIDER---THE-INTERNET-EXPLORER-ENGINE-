@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="WEBSPIDER — mecanismo de rastreamento e análise de páginas públicas da web.">
+  <title>WEBSPIDER — Internet Explorer Engine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="WEBSPIDER início"><span class="brand-mark">W</span><span>WEBSPIDER</span><small>ENGINE</small></a>
+    <nav class="main-nav" aria-label="Navegação principal">
+      <a class="active" href="#overview">Visão geral</a>
+      <a href="#workspace">Crawler</a>
+      <a href="/docs" target="_blank" rel="noreferrer">API docs ↗</a>
+    </nav>
+    <div class="header-status"><span class="status-dot"></span> Ambiente local</div>
+  </header>
+
+  <main>
+    <section class="hero" id="overview">
+      <div class="eyebrow"><span class="eyebrow-line"></span> OPEN-SOURCE WEB INTELLIGENCE</div>
+      <h1>Explore a web.<br><span>Com método.</span></h1>
+      <p class="hero-copy">Uma ferramenta de rastreamento para descobrir, visitar e organizar informações disponíveis publicamente na internet.</p>
+      <div class="hero-meta"><span>PYTHON</span><i></i><span>FASTAPI</span><i></i><span>OPEN SOURCE</span></div>
+    </section>
+
+    <section class="workspace" id="workspace">
+      <div class="section-heading">
+        <div><div class="eyebrow">01 / CONFIGURAÇÃO</div><h2>Nova exploração</h2></div>
+        <span class="version-tag">PREVIEW 0.1.0</span>
+      </div>
+      <form id="crawl-form" class="config-panel">
+        <label for="start-url">URL inicial</label>
+        <div class="url-field"><span class="url-prefix">↗</span><input id="start-url" name="url" type="url" placeholder="https://exemplo.com" required><button type="submit" id="start-button">Iniciar crawler <span>→</span></button></div>
+        <div class="form-options">
+          <div><label for="max-pages">Limite de páginas</label><select id="max-pages" name="max_pages"><option value="10">10 páginas</option><option value="25" selected>25 páginas</option><option value="50">50 páginas</option></select></div>
+          <div><label for="max-depth">Profundidade máxima</label><select id="max-depth" name="max_depth"><option value="1">Nível 1</option><option value="2" selected>Nível 2</option><option value="3">Nível 3</option></select></div>
+          <p class="notice"><span>ⓘ</span> O crawler deverá respeitar robots.txt e os limites de acesso do site.</p>
+        </div>
+      </form>
+    </section>
+
+    <section class="metrics-section">
+      <div class="section-heading compact"><div><div class="eyebrow">02 / MONITORAMENTO</div><h2>Atividade da execução</h2></div><span class="run-state" id="run-state"><span class="status-dot muted"></span> Aguardando execução</span></div>
+      <div class="metrics-grid">
+        <article class="metric-card"><span>URLs descobertas</span><strong id="discovered">—</strong><small>Encontradas durante o rastreamento</small></article>
+        <article class="metric-card"><span>URLs visitadas</span><strong id="visited">—</strong><small>Páginas requisitadas</small></article>
+        <article class="metric-card"><span>Análises concluídas</span><strong id="analyzed">—</strong><small>Conteúdo extraído com sucesso</small></article>
+        <article class="metric-card"><span>Tempo decorrido</span><strong id="elapsed">00:00</strong><small>Duração da execução</small></article>
+      </div>
+      <div class="activity-panel"><div class="activity-title"><div><span class="eyebrow">LOG DE EVENTOS</span><h3>Registro da atividade</h3></div><span class="live-label"><span class="status-dot muted"></span> LIVE</span></div><div id="activity-log" class="activity-log"><p class="empty-log">Os eventos da execução aparecerão aqui.</p></div></div>
+    </section>
+
+    <section class="bottom-grid">
+      <article class="info-card"><div class="eyebrow">03 / COMO FUNCIONA</div><h3>Um processo transparente.</h3><p>Descoberta, visita e análise são etapas diferentes. O WEBSPIDER apresenta cada métrica separadamente para que você saiba exatamente o que foi processado.</p><a href="/docs" target="_blank" rel="noreferrer">Consultar documentação da API ↗</a></article>
+      <article class="info-card"><div class="eyebrow">04 / PRINCÍPIOS</div><h3>Coleta responsável.</h3><ul><li>Somente páginas publicamente acessíveis.</li><li>Respeito às diretivas robots.txt.</li><li>Intervalos entre requisições.</li><li>Sem contornar autenticação ou paywalls.</li></ul></article>
+    </section>
+  </main>
+  <footer><a class="brand footer-brand" href="/"><span class="brand-mark">W</span><span>WEBSPIDER</span></a><span>THE INTERNET EXPLORER ENGINE</span><span>OPEN SOURCE · 2026</span></footer>
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>
