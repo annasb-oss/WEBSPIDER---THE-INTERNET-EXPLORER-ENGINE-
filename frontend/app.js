@@ -53,7 +53,7 @@ async function apiFetch(path, options = {}) {
   return fetch(apiBase + path, { ...options, headers: { ...(options.headers || {}) } });
 }
 async function connectApi() {
-  if (!apiBase) { updateApiControls(false, "A API ainda não foi conectada. Hospede o backend gratuito no Render e informe a URL aqui."); return; }
+  if (!apiBase) { updateApiControls(false, "A API ainda não foi conectada. Publique a API gratuita no Cloudflare Workers e informe a URL workers.dev aqui."); return; }
   try {
     const response = await apiFetch("/api/health");
     if (!response.ok) throw new Error("A API respondeu com erro.");
@@ -150,7 +150,15 @@ crawlForm.addEventListener("submit", async event => {
   try {
     const response = await apiFetch("/api/crawls", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
     const data = await response.json(); if (!response.ok) throw new Error(data.detail || "Não foi possível iniciar o crawler.");
-    renderSnapshot(data); pollHandle = setInterval(() => pollJob(data.id), 1400); await pollJob(data.id);
+    renderSnapshot(data);
+    if (data.findings) {
+      const panel = document.createElement("div"); panel.className = "audit-results";
+      const heading = document.createElement("h3"); heading.textContent = "Achados observados: " + data.findings_count; panel.append(heading);
+      if (!data.findings.length) { const p = document.createElement("p"); p.textContent = "Nenhum indicador verificado foi encontrado. Isso não garante que o site esteja livre de vulnerabilidades."; panel.append(p); }
+      data.findings.forEach(item => { const row=document.createElement("article");row.className="finding "+item.severity;const title=document.createElement("strong");title.textContent=item.title+" · "+item.severity.toUpperCase();const detail=document.createElement("p");detail.textContent=item.detail;row.append(title,detail);panel.append(row); });
+      const note=document.createElement("p");note.className="install-note";note.textContent=data.scope;panel.append(note);log.prepend(panel);
+      startButton.disabled=false;startButton.textContent="Nova análise →";
+    } else { addLog("A API não retornou os achados esperados.","error");startButton.disabled=false; }
   } catch (error) { addLog(error.message, "error"); setState("Não foi possível iniciar"); startButton.disabled = false; startButton.textContent = "Tentar novamente →"; }
 });
 claimForm.addEventListener("submit", async event => {
