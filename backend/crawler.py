@@ -29,8 +29,8 @@ def normalize_url(raw_url: str) -> str:
         raise CrawlError("Informe uma URL pública iniciada por http:// ou https://.")
     if parsed.username or parsed.password:
         raise CrawlError("URLs com credenciais não são aceitas.")
-    if parsed.port and not (1 <= parsed.port <= 65535):
-        raise CrawlError("Porta inválida.")
+    if parsed.port and parsed.port not in {80, 443}:
+        raise CrawlError("Por segurança, somente as portas HTTP e HTTPS padrão são aceitas.")
     clean = parsed._replace(fragment="", path=parsed.path or "/")
     return clean.geturl()
 
@@ -140,7 +140,7 @@ async def run_crawl(job: CrawlJob, jobs: dict[str, CrawlJob]) -> None:
     try:
         await ensure_public_host(job.start_url)
         async with httpx.AsyncClient(
-            headers=headers, timeout=REQUEST_TIMEOUT, limits=httpx.Limits(max_connections=2), trust_env=False, follow_redirects=False
+            headers=headers, timeout=REQUEST_TIMEOUT, limits=httpx.Limits(max_connections=2), trust_env=False, follow_redirects=False, trust_env=False, follow_redirects=False
         ) as client:
             try:
                 robots_response = await safe_get(client, robots_url)
