@@ -201,10 +201,27 @@ async def run_crawl(job: CrawlJob, jobs: dict[str, CrawlJob]) -> None:
                     job.discovered += len(links)
                     queue.extend((link, depth + 1) for link in sorted(links))
                     job.analyzed += 1
+                    security_issues = []
+                    response_headers = {key.lower(): value for key, value in response.headers.items()}
+                    if urlparse(url).scheme != "https":
+                        security_issues.append({"severity": "high", "code": "HTTPS_MISSING", "title": "Página sem HTTPS", "detail": "A URL analisada usa HTTP; dados em trânsito podem ficar expostos."})
+                    if "content-security-policy" not in response_headers:
+                        security_issues.append({"severity": "medium", "code": "CSP_MISSING", "title": "CSP não observada", "detail": "A resposta não enviou Content-Security-Policy. Isso reduz uma camada de defesa contra conteúdo injetado."})
+                    if "x-content-type-options" not in response_headers:
+                        security_issues.append({"severity": "low", "code": "NOSNIFF_MISSING", "title": "X-Content-Type-Options ausente", "detail": "O cabeçalho nosniff não foi observado."})
+                    if "referrer-policy" not in response_headers:
+                        security_issues.append({"severity": "low", "code": "REFERRER_POLICY_MISSING", "title": "Referrer-Policy ausente", "detail": "A resposta não definiu explicitamente uma política de Referer."})
+                    if urlparse(url).scheme == "https" and "strict-transport-security" not in response_headers:
+                        security_issues.append({"severity": "low", "code": "HSTS_MISSING", "title": "HSTS não observado", "detail": "A resposta HTTPS não enviou Strict-Transport-Security."})
+                    for form in soup.find_all("form", action=True):
+                        action_url = urljoin(url, form.get("action", ""))
+                        if urlparse(action_url).scheme == "http":
+                            security_issues.append({"severity": "medium", "code": "INSECURE_FORM_ACTION", "title": "Formulário envia para HTTP", "detail": "Foi observado um formulário cujo destino usa HTTP."})
+                            break
                     job.pages.append({
                         "url": url, "title": title[:300], "description": description[:500],
                         "text_preview": text_content[:500], "depth": depth,
-                        "links_found": len(links), "status_code": response.status_code,
+                        "links_found": len(links), "status_code": response.status_code, "security_issues": security_issues,
                     })
                     job.log(f"Analisada: {title[:100]} — {url}")
                 except (httpx.HTTPError, CrawlError, UnicodeError) as exc:
