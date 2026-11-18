@@ -8,7 +8,7 @@ A free, open-source crawler for discovering and organizing publicly accessible w
 - Reads and follows the site's `robots.txt` rules.
 - Configurable limit of 1–50 pages and depth of 0–3.
 - One request at a time with a one-second pause between page requests.
-- Extracts page title, meta description, a short text preview and discovered links.
+- Extracts page title, meta description, a short text preview and discovered links.\n- Performs passive checks for HTTPS and selected security headers; findings are indicators, not proof of exploitable vulnerabilities.\n- Searches published fact-check reviews through Google Fact Check Tools when an API key is configured; it never labels a claim false based only on writing style.
 - Live dashboard updates through API polling.
 - CSV export after a crawl.
 - Blocks localhost, private, reserved and non-public IP destinations, including redirects to another origin.
@@ -38,11 +38,11 @@ O repositório inclui o workflow `.github/workflows/pages.yml`, que publica auto
 
 Endereço esperado: https://annasb-oss.github.io/WEBSPIDER---THE-INTERNET-EXPLORER-ENGINE-/
 
-**Limitação desta versão:** o GitHub Pages hospeda apenas HTML, CSS e JavaScript. A tela fica pública, mas o crawler Python/FastAPI, as buscas reais, as métricas ao vivo e a exportação CSV não funcionam no Pages sozinho. O botão de iniciar fica desativado para não simular uma coleta que não está acontecendo. O backend permanece no repositório e poderá ser conectado posteriormente.
+**Limitação importante:** GitHub Pages hospeda somente HTML, CSS e JavaScript. O crawler, a auditoria passiva e a consulta de checagens precisam do backend Python no Render. A interface agora permite conectar a URL do backend; sem esse serviço, as funções ficam indisponíveis e não simulam resultados.
 
 Depois do primeiro push do workflow, se necessário, abra **Settings → Pages** no GitHub e escolha **GitHub Actions** em Build and deployment. Acompanhe a publicação em **Actions → Deploy WEBSPIDER to GitHub Pages**.
 
-## Deploy free do backend no Render (opcional, para quando quiser reativar o crawler)
+## Deploy gratuito do backend no Render (necessário para ativar o crawler no site)
 
 The repository includes a `render.yaml` Blueprint for a free Python web service.
 
@@ -51,7 +51,7 @@ The repository includes a `render.yaml` Blueprint for a free Python web service.
 3. Connect GitHub and select `annasb-oss/WEBSPIDER---THE-INTERNET-EXPLORER-ENGINE-`.
 4. Render detects `render.yaml`. Review the service and choose the **Free** plan.
 5. Click **Apply** and wait for the first deploy to finish.
-6. Open the generated `onrender.com` address. The dashboard is served at `/` and the API health check is at `/api/health`.
+6. Open the generated `onrender.com` address and test `/api/health`.\n7. Copy the service URL and paste it into **Conexão segura com o motor WEBSPIDER** on the GitHub Pages site, then click **Conectar**.\n8. To enable claim-review search, create a free API key in Google Cloud, enable Fact Check Tools API, then add it in Render under **Environment** as `GOOGLE_FACTCHECK_API_KEY`. Never put this key in frontend files or commit it to GitHub. See [Google Fact Check API setup](https://developers.google.com/fact-check/tools/api/).
 
 Every new commit on `main` triggers a deployment. GitHub Actions also runs the Python unit tests on pushes and pull requests.
 
@@ -95,3 +95,12 @@ tests/         Automated tests
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+
+## Fact-check e auditoria passiva
+
+- A checagem consulta avaliações publicadas via Google Fact Check Tools API. Sem `GOOGLE_FACTCHECK_API_KEY`, a API devolve estado "Não verificado" e um link para o Fact Check Explorer; ela não inventa um veredito.
+- Resultado ausente não significa que uma afirmação seja verdadeira. Sempre confira o texto, a data, o contexto e a organização que publicou a checagem.
+- A auditoria do crawler observa apenas sinais passivos (HTTPS e alguns cabeçalhos HTTP, além de formulários com destino HTTP). Não executa exploração de falhas, não tenta login, não injeta payloads e não substitui um pentest profissional.
+- O crawler é limitado a páginas públicas do mesmo domínio de origem, respeita robots.txt, limita páginas/tamanho de resposta e aplica intervalo entre requisições. Use apenas sites que você possui ou tem autorização para analisar.
+- O serviço gratuito do Render pode dormir após inatividade e perder execuções em memória; não é adequado para operação crítica ou disponibilidade garantida.
