@@ -79,7 +79,7 @@ async def check_claim(request: ClaimCheckRequest) -> dict[str, Any]:
             "reviews": [],
         }
     try:
-        async with httpx.AsyncClient(timeout=12.0, trust_env=False) as client:
+        async with httpx.AsyncClient(timeout=12.0, trust_env=False, follow_redirects=False) as client:
             response = await client.get(
                 "https://factchecktools.googleapis.com/v1alpha1/claims:search",
                 params={"query": request.claim, "key": api_key, "pageSize": 10},
