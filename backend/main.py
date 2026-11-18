@@ -4,7 +4,9 @@ import asyncio
 import csv
 import io
 import os
+import time
 import uuid
+from collections import defaultdict, deque
 from typing import Any
 
 import httpx
@@ -37,7 +39,18 @@ app.add_middleware(
 app.mount("/assets", StaticFiles(directory=FRONTEND_DIR), name="assets")
 jobs: dict[str, CrawlJob] = {}
 active_job_id: str | None = None
-job_lock = asyncio.Lock()\nrequest_windows: dict[str, deque[float]] = defaultdict(deque)\n\ndef enforce_rate_limit(request: Request) -> None:\n    client_ip = request.client.host if request.client else "unknown"\n    now = time.monotonic()\n    window = request_windows[client_ip]\n    while window and now - window[0] > 600:\n        window.popleft()\n    if len(window) >= 12:\n        raise HTTPException(status_code=429, detail="Limite temporário atingido. Aguarde alguns minutos.")\n    window.append(now)
+job_lock = asyncio.Lock()
+request_windows: dict[str, deque[float]] = defaultdict(deque)
+
+def enforce_rate_limit(request: Request) -> None:
+    client_ip = request.client.host if request.client else "unknown"
+    now = time.monotonic()
+    window = request_windows[client_ip]
+    while window and now - window[0] > 600:
+        window.popleft()
+    if len(window) >= 12:
+        raise HTTPException(status_code=429, detail="Limite temporário atingido. Aguarde alguns minutos.")
+    window.append(now)
 
 
 class CrawlRequest(BaseModel):
@@ -66,7 +79,8 @@ async def health_check() -> dict[str, Any]:
 
 
 @app.post("/api/claims/check", tags=["Fact-check"])
-async def check_claim(request: ClaimCheckRequest, http_request: Request) -> dict[str, Any]:\n    enforce_rate_limit(http_request)
+async def check_claim(request: ClaimCheckRequest, http_request: Request) -> dict[str, Any]:
+    enforce_rate_limit(http_request)
     """Return published fact-check reviews; never infer truth from writing style."""
     api_key = os.getenv("GOOGLE_FACTCHECK_API_KEY")
     explorer_url = "https://toolbox.google.com/factcheck/explorer?q=" + __import__("urllib.parse", fromlist=["quote_plus"]).quote_plus(request.claim)
