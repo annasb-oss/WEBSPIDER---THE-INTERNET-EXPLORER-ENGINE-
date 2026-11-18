@@ -18,6 +18,10 @@ class URLValidationTests(unittest.TestCase):
         with self.assertRaises(CrawlError):
             normalize_url("https://user:pass@example.com")
 
+    def test_rejects_nonstandard_ports(self):
+        with self.assertRaises(CrawlError):
+            normalize_url("https://example.com:8080")
+
     def test_same_origin_ignores_path(self):
         self.assertTrue(
             same_origin("https://example.com/start", "https://example.com/next")
