@@ -1,3 +1,26 @@
+const themeToggle = document.querySelector("#theme-toggle");
+const themeIcon = themeToggle?.querySelector(".theme-icon");
+const themeLabel = themeToggle?.querySelector(".theme-label");
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  const dark = theme === "dark";
+  if (themeIcon) themeIcon.textContent = dark ? "☾" : "☼";
+  if (themeLabel) themeLabel.textContent = dark ? "Tema escuro" : "Tema claro";
+  if (themeToggle) {
+    themeToggle.setAttribute("aria-label", dark ? "Ativar tema claro" : "Ativar tema escuro");
+    themeToggle.title = dark ? "Ativar tema claro" : "Ativar tema escuro";
+  }
+  const metaTheme = document.querySelector('meta[name="theme-color"]');
+  if (metaTheme) metaTheme.content = dark ? "#17151c" : "#ffffff";
+}
+const savedTheme = localStorage.getItem("webspider-theme");
+applyTheme(savedTheme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+themeToggle?.addEventListener("click", () => {
+  const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  applyTheme(next);
+  localStorage.setItem("webspider-theme", next);
+});
+
 const form = document.querySelector("#crawl-form");
 const startButton = document.querySelector("#start-button");
 const log = document.querySelector("#activity-log");
