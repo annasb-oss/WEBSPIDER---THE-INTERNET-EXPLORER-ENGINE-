@@ -19,7 +19,7 @@
   <header class="topbar">
     <a class="brand" href="./" aria-label="WEBSPIDER início"><span class="brand-mark">W</span><span>WEBSPIDER</span></a>
     <nav class="main-nav" aria-label="Navegação principal">
-      <a href="#about">Sobre</a><a href="#workspace">Documentação</a><a href="#features">Recursos</a><a href="#activity">Atividade</a><a href="#workspace">Explorar</a>
+      <a href="#about">Sobre</a><a href="#workspace">Documentação</a><a href="#fact-check">Checagem</a><a href="#features">Recursos</a><a href="#activity">Atividade</a><a href="#workspace">Explorar</a>
     </nav>
     <div class="header-actions"><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Alternar tema" title="Alternar tema"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">Tema escuro</span></button><a class="connect-button" href="#workspace">↗ Conectar</a></div>
   </header>
@@ -41,8 +41,24 @@
         <p class="install-note">O projeto é open source. Consulte o repositório para instalar e executar o mecanismo localmente.</p>
       </section>
 
+      <section class="workspace" id="fact-check">
+        <div class="workspace-heading"><div class="eyebrow">CHECAGEM DE INFORMAÇÕES</div><h2>Essa informação é confiável?</h2></div>
+        <p class="install-note">Cole uma afirmação ou manchete. O WEBSPIDER consulta checagens publicadas e mostra a fonte e a avaliação original. Não classifica uma notícia como falsa apenas pelo texto.</p>
+        <form id="claim-form" class="config-panel">
+          <label for="claim-text">Afirmação para verificar</label>
+          <textarea id="claim-text" name="claim" rows="3" maxlength="1000" placeholder="Cole aqui a afirmação ou manchete que deseja verificar..." required></textarea>
+          <div class="claim-actions"><button type="submit" id="claim-button">Consultar checagens →</button><span class="notice">A consulta depende da configuração da base de checagem.</span></div>
+        </form>
+        <div id="claim-results" class="activity-panel" aria-live="polite"><p class="empty-log">Os resultados e as fontes aparecerão aqui.</p></div>
+      </section>
+
       <section class="workspace" id="workspace">
         <div class="workspace-heading"><div class="eyebrow">FERRAMENTA DE EXPLORAÇÃO</div><h2>Iniciar rastreamento</h2></div>
+        <div class="config-panel api-config">
+          <label for="api-url">Conexão segura com o motor WEBSPIDER</label>
+          <div class="url-field"><span class="url-prefix">↗</span><input id="api-url" type="url" inputmode="url" placeholder="https://seu-servico.onrender.com" autocomplete="url"><button type="button" id="save-api-url">Conectar</button></div>
+          <p class="notice" id="api-status">A interface está no GitHub Pages. Conecte a API hospedada para ativar o crawler e as verificações em tempo real.</p>
+        </div>
         <form id="crawl-form" class="config-panel">
           <label for="start-url">URL inicial</label>
           <div class="url-field"><span class="url-prefix">↗</span><input id="start-url" name="url" type="url" placeholder="https://exemplo.com" required><button type="submit" id="start-button">Iniciar crawler <span>→</span></button></div>
