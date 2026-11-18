@@ -109,22 +109,22 @@ footer{border-top:1px solid var(--line);padding:20px max(calc((100vw - 1160px)/2
 
 /* Visual refinement: Symfony-inspired dark package page, WEBSPIDER pink accent */
 :root{
- --purple:#ed4b91;--purple-2:#ff79b0;--surface:#111014;--page:#111014;
+ --purple:#7026cf;--purple-2:#c09af8;--surface:#111014;--page:#111014;
  --ink:#f5f1f5;--muted:#aaa3ad;--line:#39333d;--panel:#1b181f;--soft:#29212a;--sidebar:#aaa3ad;
 }
 html[data-theme="light"]{
- --surface:#fff;--page:#fff;--ink:#24212b;--muted:#77727f;--line:#e8e4ec;--panel:#f6f4f8;--soft:#f8eaf1;--sidebar:#77727f;
+ --surface:#fff;--page:#fff;--ink:#24212b;--muted:#77727f;--line:#e8e4ec;--panel:#f6f4f8;--soft:#f1edf6;--sidebar:#77727f;
 }
 html,body{background:var(--page);color:var(--ink)}
 body{font-family:Inter,"Segoe UI",sans-serif;font-weight:400;letter-spacing:-.012em}
 .top-announcement{background:#080709;color:#f4eff4;border-bottom:1px solid #29232b}
 .topbar{background:#111014;border-bottom:1px solid #332c35}
 html[data-theme="light"] .topbar{background:#fff}
-.brand-mark{background:#f04c91;border-radius:12px}
-.event-strip{background:#ed4b91;color:#fff;border-radius:0 0 13px 13px;position:relative;overflow:hidden}
-.event-strip:after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,#ffb0d0,#ed4b91 45%,#b83270)}
+.brand-mark{background:#7026cf;border-radius:12px}
+.event-strip{background:#7026cf;color:#fff;border-radius:0 0 13px 13px;position:relative;overflow:hidden}
+.event-strip:after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,#d8c4f8,#7026cf 45%,#5420ad)}
 .main-nav a{font-weight:500;letter-spacing:-.02em}
-.main-nav a:hover,.main-nav a.active{color:#ff78b0;border-bottom-color:#ed4b91}
+.main-nav a:hover,.main-nav a.active{color:#a879f1;border-bottom-color:#7026cf}
 .theme-toggle,.connect-button{border-radius:12px}
 .theme-toggle{background:var(--panel);border-color:var(--line);color:var(--ink)}
 .connect-button{background:var(--panel);color:var(--ink);border-color:var(--line)}
@@ -139,7 +139,7 @@ html[data-theme="light"] .topbar{background:#fff}
 .package-description{font-weight:650}
 .tags{gap:13px}
 .action-links a{border-radius:11px;font-weight:650}
-.action-primary{background:#f6b7d2;border-color:#f6b7d2;color:#40152a}
+.action-primary{background:#d8c4f8;border-color:#d8c4f8;color:#35145f}
 .action-secondary{background:#28232c;border-color:#554a58;color:#f7f0f5}
 html[data-theme="light"] .action-secondary{background:#f3eff5;color:#29232d;border-color:#ded6e2}
 .code-window{border-radius:12px;border:1px solid #766a7b;background:#211d26;box-shadow:0 7px 22px #0003}
@@ -147,15 +147,15 @@ html[data-theme="light"] .action-secondary{background:#f3eff5;color:#29232d;bord
 .code-window pre{font-size:13px}
 .config-panel,.metric-card,.activity-panel{border-radius:14px}
 .url-field,.form-options select,.url-field button{border-radius:11px}
-.url-field button{background:#ed4b91;color:#fff}
+.url-field button{background:#7026cf;color:#fff}
 .metric-card{background:var(--panel)}
 .activity-panel{overflow:hidden}
 .side-block{border-radius:12px}
 .side-block h3{font-size:12px;letter-spacing:-.015em}
 .side-link{border-radius:9px;border-left:3px solid transparent}
-.side-link.active{background:var(--soft);border-left-color:#ed4b91}
+.side-link.active{background:var(--soft);border-left-color:#7026cf}
 .breadcrumbs{font-size:12px}
-.breadcrumbs a:hover,.side-link:hover{color:#ff78b0}
+.breadcrumbs a:hover,.side-link:hover{color:#a879f1}
 footer{background:var(--surface)}
 @media(max-width:1050px){
  .page-layout{grid-template-columns:minmax(0,1fr) minmax(180px,.45fr);gap:25px}
@@ -175,7 +175,7 @@ footer{background:var(--surface)}
 /* Fact-check and passive audit interface */
 #claim-text{width:100%;resize:vertical;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:13px;font:inherit;min-height:90px}
 .claim-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:12px}
-.claim-actions button,.audit-button{background:#ed4b91;color:#fff;border:0;border-radius:10px;padding:10px 15px;font-weight:650;cursor:pointer}
+.claim-actions button,.audit-button{background:#7026cf;color:#fff;border:0;border-radius:10px;padding:10px 15px;font-weight:650;cursor:pointer}
 .claim-actions button:disabled{opacity:.6;cursor:wait}
 .api-config{margin-bottom:16px}
 .api-config .notice{margin:9px 0 0;color:var(--muted)}
