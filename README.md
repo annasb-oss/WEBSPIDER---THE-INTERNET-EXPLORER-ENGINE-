@@ -12,6 +12,8 @@ A free, open-source crawler for discovering and organizing publicly accessible w
 - Live dashboard updates through API polling.
 - CSV export after a crawl.
 - Blocks localhost, private, reserved and non-public IP destinations, including redirects to another origin.
+- Limits downloaded response bodies to 2 MB per request.
+- Stops safely when robots.txt cannot be verified or returns an access/rate-limit/server error.
 
 ## Run locally
 
@@ -60,7 +62,8 @@ tests/         Automated tests
 - [x] Live execution metrics
 - [x] CSV report export
 - [ ] JSON and TXT report exports
-- [ ] Automated tests and deployment guide
+- [x] Initial automated URL-validation tests
+- [ ] Expanded integration tests and deployment guide
 
 ## License
 
