@@ -331,3 +331,37 @@ button,.action-primary{
   }
   .breadcrumbs{flex-wrap:wrap}
 }
+
+
+/* WEBSPIDER brand correction: keep the purple consistently deep */
+:root,
+html[data-theme="light"],
+html[data-theme="dark"]{
+  --purple:#4b168c !important;
+  --purple-2:#5b21a8 !important;
+  --accent:#4b168c !important;
+  --accent-2:#5b21a8 !important;
+  --lavender:#eee7f8 !important;
+  --soft:#eee7f8 !important;
+  accent-color:#4b168c !important;
+}
+.brand-mark,.mini-mark,.event-strip,
+button,.url-field button,.claim-actions button,.audit-button,
+.action-primary{
+  background:#4b168c !important;
+  border-color:#5b21a8 !important;
+  color:#fff !important;
+}
+.main-nav a:hover,.main-nav a.active,.breadcrumbs a:hover,
+.side-link:hover,.connect-button:hover,.info-card a,
+.eyebrow,.url-prefix,.log-entry time,.spider-logo{
+  color:#4b168c !important;
+}
+.main-nav a:hover,.main-nav a.active,.side-link.active{
+  border-color:#4b168c !important;
+}
+.event-strip:after{
+  background:linear-gradient(90deg,#5b21a8,#4b168c 45%,#351064) !important;
+}
+button:hover{background:#351064 !important}
+::selection{background:#4b168c !important;color:#fff}
