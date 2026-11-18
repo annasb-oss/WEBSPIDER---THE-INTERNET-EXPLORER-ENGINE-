@@ -8,7 +8,7 @@ import uuid
 from typing import Any
 
 import httpx
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
@@ -37,7 +37,7 @@ app.add_middleware(
 app.mount("/assets", StaticFiles(directory=FRONTEND_DIR), name="assets")
 jobs: dict[str, CrawlJob] = {}
 active_job_id: str | None = None
-job_lock = asyncio.Lock()
+job_lock = asyncio.Lock()\nrequest_windows: dict[str, deque[float]] = defaultdict(deque)\n\ndef enforce_rate_limit(request: Request) -> None:\n    client_ip = request.client.host if request.client else "unknown"\n    now = time.monotonic()\n    window = request_windows[client_ip]\n    while window and now - window[0] > 600:\n        window.popleft()\n    if len(window) >= 12:\n        raise HTTPException(status_code=429, detail="Limite temporário atingido. Aguarde alguns minutos.")\n    window.append(now)
 
 
 class CrawlRequest(BaseModel):
@@ -66,7 +66,7 @@ async def health_check() -> dict[str, Any]:
 
 
 @app.post("/api/claims/check", tags=["Fact-check"])
-async def check_claim(request: ClaimCheckRequest) -> dict[str, Any]:
+async def check_claim(request: ClaimCheckRequest, http_request: Request) -> dict[str, Any]:\n    enforce_rate_limit(http_request)
     """Return published fact-check reviews; never infer truth from writing style."""
     api_key = os.getenv("GOOGLE_FACTCHECK_API_KEY")
     explorer_url = "https://toolbox.google.com/factcheck/explorer?q=" + __import__("urllib.parse", fromlist=["quote_plus"]).quote_plus(request.claim)
@@ -97,7 +97,7 @@ async def check_claim(request: ClaimCheckRequest) -> dict[str, Any]:
                 "publisher": (review.get("publisher") or {}).get("name", ""),
                 "title": review.get("title", ""),
                 "url": review.get("url", ""),
-                "rating": (review.get("textualRating") or review.get("reviewRating", {}).get("alternateName", "")),
+                "rating": (review.get("reviewRating", {}).get("textualRating") or review.get("reviewRating", {}).get("alternateName", "")),
                 "review_date": review.get("reviewDate", ""),
             })
     return {
