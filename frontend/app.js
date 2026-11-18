@@ -119,4 +119,12 @@ form.addEventListener("submit", async event => {
   }
 });
 
-checkApi();
+if (location.hostname.endsWith("github.io")) {
+  startButton.disabled = true;
+  startButton.textContent = "Backend não conectado";
+  setState("Prévia estática — crawler offline");
+  addLog("Interface publicada no GitHub Pages. O crawler Python ainda não está conectado nesta versão.");
+  addLog("As métricas e a pesquisa em tempo real serão ativadas quando o backend for hospedado.");
+} else {
+  checkApi();
+}
