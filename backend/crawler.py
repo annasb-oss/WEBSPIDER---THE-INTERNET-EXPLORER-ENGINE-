@@ -140,7 +140,7 @@ async def run_crawl(job: CrawlJob, jobs: dict[str, CrawlJob]) -> None:
     try:
         await ensure_public_host(job.start_url)
         async with httpx.AsyncClient(
-            headers=headers, timeout=REQUEST_TIMEOUT, limits=httpx.Limits(max_connections=2), trust_env=False, follow_redirects=False, trust_env=False, follow_redirects=False
+            headers=headers, timeout=REQUEST_TIMEOUT, limits=httpx.Limits(max_connections=2), trust_env=False, follow_redirects=False
         ) as client:
             try:
                 robots_response = await safe_get(client, robots_url)
