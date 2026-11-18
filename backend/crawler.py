@@ -62,19 +62,38 @@ def same_origin(first: str, second: str) -> bool:
 
 
 async def safe_get(client: httpx.AsyncClient, url: str) -> httpx.Response:
+    """Fetch one same-origin URL while enforcing a hard response-body limit."""
     current = url
     for _ in range(6):
         await ensure_public_host(current)
-        response = await client.get(current, follow_redirects=False)
-        if response.status_code not in {301, 302, 303, 307, 308}:
-            return response
-        location = response.headers.get("location")
-        if not location:
-            return response
-        next_url = normalize_url(urljoin(current, location))
-        if not same_origin(url, next_url):
-            raise CrawlError("Redirecionamento para outro domínio bloqueado.")
-        current = next_url
+        async with client.stream("GET", current, follow_redirects=False) as response:
+            if response.status_code in {301, 302, 303, 307, 308}:
+                location = response.headers.get("location")
+                if not location:
+                    return httpx.Response(
+                        response.status_code, headers=response.headers,
+                        request=response.request, content=b"",
+                    )
+                next_url = normalize_url(urljoin(current, location))
+                if not same_origin(url, next_url):
+                    raise CrawlError("Redirecionamento para outro domínio bloqueado.")
+                current = next_url
+                continue
+
+            body = bytearray()
+            async for chunk in response.aiter_bytes():
+                remaining = MAX_RESPONSE_BYTES + 1 - len(body)
+                if remaining <= 0:
+                    break
+                body.extend(chunk[:remaining])
+                if len(body) > MAX_RESPONSE_BYTES:
+                    break
+            return httpx.Response(
+                response.status_code,
+                headers=response.headers,
+                content=bytes(body[:MAX_RESPONSE_BYTES]),
+                request=response.request,
+            )
     raise CrawlError("Muitos redirecionamentos.")
 
 
@@ -125,15 +144,24 @@ async def run_crawl(job: CrawlJob, jobs: dict[str, CrawlJob]) -> None:
         ) as client:
             try:
                 robots_response = await safe_get(client, robots_url)
-                if robots_response.status_code == 200:
-                    robots.parse(robots_response.text.splitlines())
-                    job.log("Diretivas robots.txt carregadas.")
-                else:
-                    robots.parse([])
-                    job.log(f"robots.txt respondeu HTTP {robots_response.status_code}; sem regras publicadas.")
             except (httpx.HTTPError, CrawlError) as exc:
+                raise CrawlError(
+                    f"Não foi possível verificar robots.txt; a exploração foi interrompida por segurança: {exc}"
+                ) from exc
+
+            if robots_response.status_code == 200:
+                robots.parse(robots_response.text.splitlines())
+                job.log("Diretivas robots.txt carregadas.")
+            elif 400 <= robots_response.status_code < 500 and robots_response.status_code not in {401, 403, 429}:
                 robots.parse([])
-                job.log(f"Não foi possível ler robots.txt ({exc}); prosseguindo com cautela.", "warning")
+                job.log(
+                    f"robots.txt respondeu HTTP {robots_response.status_code}; nenhuma regra publicada.",
+                    "warning",
+                )
+            else:
+                raise CrawlError(
+                    f"robots.txt respondeu HTTP {robots_response.status_code}; exploração bloqueada por segurança."
+                )
 
             while queue and job.visited < job.max_pages:
                 url, depth = queue.popleft()
