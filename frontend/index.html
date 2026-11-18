@@ -12,59 +12,61 @@
   <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
+  <div class="top-announcement"><span class="mini-mark">W</span><strong>WEBSPIDER ENGINE</strong><span>Rastreamento inteligente e responsável da web</span><a href="#workspace">Conheça a ferramenta ↗</a></div>
   <header class="topbar">
-    <a class="brand" href="/" aria-label="WEBSPIDER início"><span class="brand-mark">W</span><span>WEBSPIDER</span><small>ENGINE</small></a>
+    <a class="brand" href="/" aria-label="WEBSPIDER início"><span class="brand-mark">W</span><span>WEBSPIDER</span></a>
     <nav class="main-nav" aria-label="Navegação principal">
-      <a class="active" href="#overview">Visão geral</a>
-      <a href="#workspace">Crawler</a>
-      <a href="/docs" target="_blank" rel="noreferrer">API docs ↗</a>
+      <a href="#about">Sobre</a><a href="#workspace">Documentação</a><a href="#features">Recursos</a><a href="#activity">Atividade</a><a href="#workspace">Explorar</a>
     </nav>
-    <div class="header-actions"><div class="header-status"><span class="status-dot"></span> WEB CRAWLER</div><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema claro" title="Alternar tema"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">Tema claro</span></button></div>
+    <div class="header-actions"><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Alternar tema"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">Tema escuro</span></button><a class="connect-button" href="#workspace">↗ Conectar</a></div>
   </header>
-  <div class="announcement"><span class="announcement-mark">●</span><strong>WEBSPIDER ENGINE</strong><span>Rastreamento responsável · Monitoramento em tempo real</span><a href="#workspace">Começar exploração ↗</a></div>
+  <div class="event-strip"><strong>WEBSPIDER LIVE</strong><span>Motor de exploração da internet</span><span class="strip-divider">·</span><span>Open source</span><a href="#workspace">Iniciar exploração ↗</a></div>
 
-  <main>
-    <div class="breadcrumbs"><a href="#overview">Início</a><span>/</span><a href="#workspace">WEBSPIDER</a><span>/</span><strong>Internet Explorer Engine</strong></div>
-    <section class="hero" id="overview">
-      <div class="eyebrow"><span class="eyebrow-line"></span> OPEN-SOURCE WEB INTELLIGENCE</div>
-      <h1>Explore a web.<br><span>Com método.</span></h1>
-      <p class="hero-copy">Uma ferramenta de rastreamento para descobrir, visitar e organizar informações disponíveis publicamente na internet.</p>
-      <div class="hero-meta"><span>PYTHON</span><i></i><span>FASTAPI</span><i></i><span>OPEN SOURCE</span></div>
-    </section>
+  <main class="page-layout">
+    <div class="content-column">
+      <div class="breadcrumbs"><a href="#about">Início</a><span>/</span><a href="#about">WEBSPIDER</a><span>/</span><strong>Internet Explorer Engine</strong></div>
+      <section class="package-intro" id="about">
+        <h1>WEBSPIDER Engine</h1>
+        <p class="package-description">Um mecanismo de rastreamento e análise de páginas públicas da web.</p>
+        <div class="tags"><span># rastreamento</span><span># webscraping</span><span># crawler</span><span># python</span><span># open-source</span></div>
+        <div class="action-links"><a class="action-primary" href="#workspace">▤ Documentação</a><a class="action-secondary" href="https://github.com/annasb-oss/WEBSPIDER---THE-INTERNET-EXPLORER-ENGINE-" target="_blank" rel="noreferrer">◉ Código-fonte</a><a class="action-secondary" href="#workspace">♧ Explorar</a></div>
+      </section>
 
-    <section class="workspace" id="workspace">
-      <div class="section-heading">
-        <div><div class="eyebrow">01 / CONFIGURAÇÃO</div><h2>Nova exploração</h2></div>
-        <span class="version-tag">PREVIEW 0.1.0</span>
-      </div>
-      <form id="crawl-form" class="config-panel">
-        <label for="start-url">URL inicial</label>
-        <div class="url-field"><span class="url-prefix">↗</span><input id="start-url" name="url" type="url" placeholder="https://exemplo.com" required><button type="submit" id="start-button">Iniciar crawler <span>→</span></button></div>
-        <div class="form-options">
-          <div><label for="max-pages">Limite de páginas</label><select id="max-pages" name="max_pages"><option value="10">10 páginas</option><option value="25" selected>25 páginas</option><option value="50">50 páginas</option></select></div>
-          <div><label for="max-depth">Profundidade máxima</label><select id="max-depth" name="max_depth"><option value="1">Nível 1</option><option value="2" selected>Nível 2</option><option value="3">Nível 3</option></select></div>
-          <p class="notice"><span>ⓘ</span> O crawler deverá respeitar robots.txt e os limites de acesso do site.</p>
-        </div>
-      </form>
-    </section>
+      <section class="install-section" id="features">
+        <h2>Comece a explorar a web com o WEBSPIDER:</h2>
+        <div class="code-window"><div class="code-window-bar"><span>Terminal</span><button type="button" id="copy-command">Copy</button><span>−</span><span>□</span><span>×</span></div><pre><code>$ git clone https://github.com/annasb-oss/WEBSPIDER---THE-INTERNET-EXPLORER-ENGINE-.git</code></pre></div>
+        <p class="install-note">O projeto é open source. Consulte o repositório para instalar e executar o mecanismo localmente.</p>
+      </section>
 
-    <section class="metrics-section">
-      <div class="section-heading compact"><div><div class="eyebrow">02 / MONITORAMENTO</div><h2>Atividade da execução</h2></div><span class="run-state" id="run-state"><span class="status-dot muted"></span> Aguardando execução</span></div>
-      <div class="metrics-grid">
-        <article class="metric-card"><span>URLs descobertas</span><strong id="discovered">—</strong><small>Encontradas durante o rastreamento</small></article>
-        <article class="metric-card"><span>URLs visitadas</span><strong id="visited">—</strong><small>Páginas requisitadas</small></article>
-        <article class="metric-card"><span>Análises concluídas</span><strong id="analyzed">—</strong><small>Conteúdo extraído com sucesso</small></article>
-        <article class="metric-card"><span>Tempo decorrido</span><strong id="elapsed">00:00</strong><small>Duração da execução</small></article>
-      </div>
-      <div class="activity-panel"><div class="activity-title"><div><span class="eyebrow">LOG DE EVENTOS</span><h3>Registro da atividade</h3></div><span class="live-label"><span class="status-dot muted"></span> LIVE</span></div><div id="activity-log" class="activity-log"><p class="empty-log">Os eventos da execução aparecerão aqui.</p></div></div>
-    </section>
-
-    <section class="bottom-grid">
-      <article class="info-card"><div class="eyebrow">03 / COMO FUNCIONA</div><h3>Um processo transparente.</h3><p>Descoberta, visita e análise são etapas diferentes. O WEBSPIDER apresenta cada métrica separadamente para que você saiba exatamente o que foi processado.</p><a href="/docs" target="_blank" rel="noreferrer">Consultar documentação da API ↗</a></article>
-      <article class="info-card"><div class="eyebrow">04 / PRINCÍPIOS</div><h3>Coleta responsável.</h3><ul><li>Somente páginas publicamente acessíveis.</li><li>Respeito às diretivas robots.txt.</li><li>Intervalos entre requisições.</li><li>Sem contornar autenticação ou paywalls.</li></ul></article>
-    </section>
+      <section class="workspace" id="workspace">
+        <div class="workspace-heading"><div class="eyebrow">FERRAMENTA DE EXPLORAÇÃO</div><h2>Iniciar rastreamento</h2></div>
+        <form id="crawl-form" class="config-panel">
+          <label for="start-url">URL inicial</label>
+          <div class="url-field"><span class="url-prefix">↗</span><input id="start-url" name="url" type="url" placeholder="https://exemplo.com" required><button type="submit" id="start-button">Iniciar crawler <span>→</span></button></div>
+          <div class="form-options"><div><label for="max-pages">Limite de páginas</label><select id="max-pages" name="max_pages"><option value="10">10 páginas</option><option value="25" selected>25 páginas</option><option value="50">50 páginas</option></select></div><div><label for="max-depth">Profundidade máxima</label><select id="max-depth" name="max_depth"><option value="1">Nível 1</option><option value="2" selected>Nível 2</option><option value="3">Nível 3</option></select></div><p class="notice"><span>ⓘ</span> Respeite robots.txt e os limites de acesso do site.</p></div>
+        </form>
+      </section>
+      <section class="activity-section" id="activity">
+        <div class="activity-heading"><div class="eyebrow">MONITORAMENTO</div><h2>Atividade da execução</h2><span class="run-state" id="run-state"><span class="status-dot muted"></span> Aguardando execução</span></div>
+        <div class="metrics-grid"><article class="metric-card"><span>URLs descobertas</span><strong id="discovered">—</strong></article><article class="metric-card"><span>URLs visitadas</span><strong id="visited">—</strong></article><article class="metric-card"><span>Análises concluídas</span><strong id="analyzed">—</strong></article><article class="metric-card"><span>Tempo decorrido</span><strong id="elapsed">00:00</strong></article></div>
+        <div class="activity-panel"><div class="activity-title"><div><span class="eyebrow">LOG DE EVENTOS</span><h3>Registro da atividade</h3></div><span class="live-label"><span class="status-dot muted"></span> LIVE</span></div><div id="activity-log" class="activity-log"><p class="empty-log">Os eventos da execução aparecerão aqui.</p></div></div>
+      </section>
+    </div>
+    <aside class="sidebar">
+      <div class="side-block"><h3>O que é o WEBSPIDER?</h3><p>Um mecanismo para descobrir, visitar e organizar informações disponíveis publicamente na internet.</p></div>
+      <div class="side-block"><h3>Resumo do projeto</h3><div class="side-fact"><span>Versão</span><strong>0.1.0 · Preview</strong></div><div class="side-fact"><span>Licença</span><strong>Open source</strong></div><div class="side-fact"><span>Tecnologia</span><strong>Python · FastAPI</strong></div><div class="side-fact"><span>Hospedagem</span><strong>GitHub Pages</strong></div></div>
+      <div class="side-block"><h3>Exploração</h3><a class="side-link active" href="#workspace">Iniciar crawler</a><a class="side-link" href="#activity">Monitoramento</a><a class="side-link" href="#features">Instalação</a><a class="side-link" href="https://github.com/annasb-oss/WEBSPIDER---THE-INTERNET-EXPLORER-ENGINE-" target="_blank" rel="noreferrer">Repositório GitHub ↗</a></div>
+      <div class="side-block principles"><h3>Coleta responsável</h3><p>Respeito às diretivas robots.txt, intervalos entre requisições e acesso apenas a páginas públicas.</p></div>
+    </aside>
   </main>
   <footer><a class="brand footer-brand" href="/"><span class="brand-mark">W</span><span>WEBSPIDER</span></a><span>THE INTERNET EXPLORER ENGINE</span><span>OPEN SOURCE · 2026</span></footer>
   <script src="/assets/app.js" defer></script>
+  <script>
+    document.getElementById('copy-command')?.addEventListener('click', async () => {
+      const command = 'git clone https://github.com/annasb-oss/WEBSPIDER---THE-INTERNET-EXPLORER-ENGINE-.git';
+      try { await navigator.clipboard.writeText(command); document.getElementById('copy-command').textContent = 'Copied'; }
+      catch { document.getElementById('copy-command').textContent = 'Selecione o comando'; }
+    });
+  </script>
 </body>
 </html>
